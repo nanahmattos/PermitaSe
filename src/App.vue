@@ -33,7 +33,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
 .headerStyle {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   bottom: 0;
   background-color: #9c9c9c;
   padding: 15px;

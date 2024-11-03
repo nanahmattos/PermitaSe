@@ -11,7 +11,6 @@
 </template>
 <style scoped>
 .HeroStyle {
- 
   text-align: center;
 }
 </style>
