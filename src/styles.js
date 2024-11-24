@@ -4,4 +4,4 @@ export const palette = {
     verdeClaro: '#73c04e',
     verde: '#437337',
     azul: '#001c42'
-}
+};

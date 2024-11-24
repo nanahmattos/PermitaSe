@@ -1,21 +1,25 @@
 <script setup>
 import { ref } from 'vue'
+import imageEu from '../assets/images/eu.jpeg'
 
 const items = ref([
   {
-    title: 'Missão',
+    title: 'Amanda Silva, 32 anos',
     content:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo impedit soluta, alias similique voluptatum commodi nostrum.'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo impedit soluta, alias similique voluptatum commodi nostrum.',
+    image: imageEu
   },
   {
     title: 'Visão',
     content:
-      'Aliquid officia debitis excepturi atque natus animi quidem voluptatem labore beatae ad quia.'
+      'Aliquid officia debitis excepturi atque natus animi quidem voluptatem labore beatae ad quia.',
+    image: imageEu
   },
   {
     title: 'Valores',
     content:
-      'Facilis porro quos quia consequatur maxime architecto. Cupiditate autem eaque enim distinctio quam soluta.'
+      'Facilis porro quos quia consequatur maxime architecto. Cupiditate autem eaque enim distinctio quam soluta.',
+    image: imageEu
   }
 ])
 
@@ -34,25 +38,37 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
 </script>
 
 <template>
-  <section class="carousel-container">
-    <div class="carousel">
-      <div class="carousel-text prev" v-if="items[getPrevIndex()]">
+  <section class="depoimentos-container">
+    <h1 class="title">Depoimentos</h1>
+
+    <div class="depoimentos">
+      <div class="depoimentos-text prev" v-if="items[getPrevIndex()]">
+        <div class="depoimentos-image">
+          <img :src="items[getPrevIndex()].image" alt="treinamento" />
+        </div>
         <h3>{{ items[getPrevIndex()].title }}</h3>
         <p>{{ items[getPrevIndex()].content }}</p>
       </div>
 
-      <div class="carousel-text selected">
+      <div class="depoimentos-text selected">
+        <div class="depoimentos-image">
+          <img :src="items[currentIndex].image" alt="treinamento" />
+        </div>
+
         <h3>{{ items[currentIndex].title }}</h3>
         <p>{{ items[currentIndex].content }}</p>
       </div>
 
-      <div class="carousel-text next" v-if="items[getNextIndex()]">
+      <div class="depoimentos-text next" v-if="items[getNextIndex()]">
+        <div class="depoimentos-image">
+          <img :src="items[getNextIndex()].image" alt="treinamento" />
+        </div>
         <h3>{{ items[getNextIndex()].title }}</h3>
         <p>{{ items[getNextIndex()].content }}</p>
       </div>
     </div>
 
-    <div class="buttons-carousel">
+    <div class="buttons-depoimentos">
       <button @click="prev">
         <img src="../assets/icons/left.svg" alt="left" />
       </button>
@@ -60,32 +76,20 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
         <img src="../assets/icons/rigth.svg" alt="right" />
       </button>
     </div>
-
-    <div class="background-image">
-      <div class="overlay-text">
-        <h1>Thayanni Rosa</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti atque ad maxime autem
-          corporis enim voluptates consequuntur inventore soluta, nesciunt nisi est quia quis
-          minima, suscipit a quam neque quo!
-        </p>
-      </div>
-    </div>
   </section>
 </template>
-
 <style scoped>
-.carousel-container {
+.depoimentos-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 40vh;
   overflow: hidden;
 }
 
-.carousel {
+.depoimentos {
   position: relative;
   display: flex;
   align-items: center;
@@ -95,11 +99,11 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   overflow: hidden;
 }
 
-.carousel-text {
-  background-color: #9b9b9b;
+.depoimentos-text {
+  background-color: #555252;
+  border-radius: 15px;
   position: absolute;
   top: 0;
-  border-radius: 50%;
   text-align: center;
   width: 250px;
   height: 250px;
@@ -111,6 +115,21 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   transition:
     transform 0.5s ease,
     opacity 0.5s ease;
+}
+
+.depoimentos-image {
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.depoimentos-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .selected {
@@ -131,54 +150,25 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   z-index: 1;
 }
 
-
-.buttons-carousel {
+/* invisible buttons */
+.buttons-depoimentos {
   position: absolute;
   z-index: 2;
-  top: 20%;
+  top: 50%;
   width: 100%;
   display: flex;
   justify-content: space-between;
   transform: translateY(-50%);
 }
 
-.buttons-carousel button {
+.buttons-depoimentos button {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
 
-.buttons-carousel img {
+.buttons-depoimentos img {
   width: 40px;
   height: 40px;
-}
-
-.background-image {
-  position: absolute;
-  z-index: -1;
-  top: 30%;
-  left: 0;
-  right: 0;
-  background-image: url('../assets/images/IMG_0901.JPEG');
-  background-size: cover;
-  background-position: center;
-  height: 70vh;
-}
-
-.overlay-text {
-  color: white;
-  text-align: center;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-direction: column;
-}
-
-@media (max-width: 768px) {
 }
 </style>

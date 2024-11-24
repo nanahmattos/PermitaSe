@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-  <div class="HeroStyle container">
+  <div class="hero container">
     <h1>Permita-se</h1>
     <p>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti atque ad maxime autem
@@ -10,7 +10,8 @@
   </div>
 </template>
 <style scoped>
-.HeroStyle {
+.hero {
   text-align: center;
+  margin: 20px;
 }
 </style>
