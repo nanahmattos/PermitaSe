@@ -58,6 +58,7 @@ nav ul {
   padding: 0;
   margin: 0;
   list-style: none;
+  cursor: pointer;
 }
 
 nav ul li a {

@@ -4,19 +4,22 @@ import imageEu from '../assets/images/eu.jpeg'
 
 const items = ref([
   {
-    title: 'Amanda Silva, 32 anos',
+    title: 'Amanda Silva',
+    age: 32,
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo impedit soluta, alias similique voluptatum commodi nostrum.',
     image: imageEu
   },
   {
-    title: 'Visão',
+    title: 'Gabriela Pereira',
+    age: 25,
     content:
       'Aliquid officia debitis excepturi atque natus animi quidem voluptatem labore beatae ad quia.',
     image: imageEu
   },
   {
-    title: 'Valores',
+    title: 'Maria Souza',
+    age: 65,
     content:
       'Facilis porro quos quia consequatur maxime architecto. Cupiditate autem eaque enim distinctio quam soluta.',
     image: imageEu
@@ -47,6 +50,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
           <img :src="items[getPrevIndex()].image" alt="treinamento" />
         </div>
         <h3>{{ items[getPrevIndex()].title }}</h3>
+        <h4>{{ items[getPrevIndex()].age }} anos</h4>
         <p>{{ items[getPrevIndex()].content }}</p>
       </div>
 
@@ -56,6 +60,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
         </div>
 
         <h3>{{ items[currentIndex].title }}</h3>
+        <h4>{{ items[currentIndex].age }} anos</h4>
         <p>{{ items[currentIndex].content }}</p>
       </div>
 
@@ -64,6 +69,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
           <img :src="items[getNextIndex()].image" alt="treinamento" />
         </div>
         <h3>{{ items[getNextIndex()].title }}</h3>
+        <h4>{{ items[getNextIndex()].age }} anos</h4>
         <p>{{ items[getNextIndex()].content }}</p>
       </div>
     </div>
@@ -85,7 +91,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 40vh;
+  height: 50vh;
   overflow: hidden;
 }
 
