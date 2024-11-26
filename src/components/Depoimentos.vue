@@ -14,7 +14,7 @@ const items = ref([
     title: 'Gabriela Pereira',
     age: 25,
     content:
-      'Aliquid officia debitis excepturi atque natus animi quidem voluptatem labore beatae ad quia.',
+      'Aliquid officia debitis excepturi atque natus animi quidem voluptatem labore beatae ad quia.atque natus animi quidem voluptatem labore beatae ad quia.',
     image: imageEu
   },
   {
@@ -38,14 +38,49 @@ const prev = () => {
 
 const getPrevIndex = () => (currentIndex.value - 1 + items.value.length) % items.value.length
 const getNextIndex = () => (currentIndex.value + 1) % items.value.length
+
+// Variáveis para o gesto
+let startX = 0
+let currentTranslate = 0
+let prevTranslate = 0
+let isDragging = false
+
+// Handlers de evento
+const onTouchStart = (event) => {
+  startX = event.touches[0].clientX
+  isDragging = true
+}
+
+const onTouchMove = (event) => {
+  if (!isDragging) return
+  const currentX = event.touches[0].clientX
+  currentTranslate = prevTranslate + currentX - startX
+}
+
+const onTouchEnd = () => {
+  isDragging = false
+
+  // Lógica de navegação
+  if (currentTranslate - prevTranslate > 50) {
+    prev()
+  } else if (currentTranslate - prevTranslate < -50) {
+    next()
+  }
+
+  // Reseta o translate
+  currentTranslate = 0
+  prevTranslate = 0
+}
 </script>
 
 <template>
   <section class="depoimentos-container">
     <h1 class="title">Depoimentos</h1>
 
-    <div class="depoimentos">
-      <div class="depoimentos-text prev" v-if="items[getPrevIndex()]">
+    <div class="depoimentos" @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd">
+      <div class="depoimentos-item prev" v-if="items[getPrevIndex()]">
         <div class="depoimentos-image">
           <img :src="items[getPrevIndex()].image" alt="treinamento" />
         </div>
@@ -54,7 +89,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
         <p>{{ items[getPrevIndex()].content }}</p>
       </div>
 
-      <div class="depoimentos-text selected">
+      <div class="depoimentos-item selected">
         <div class="depoimentos-image">
           <img :src="items[currentIndex].image" alt="treinamento" />
         </div>
@@ -64,7 +99,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
         <p>{{ items[currentIndex].content }}</p>
       </div>
 
-      <div class="depoimentos-text next" v-if="items[getNextIndex()]">
+      <div class="depoimentos-item next" v-if="items[getNextIndex()]">
         <div class="depoimentos-image">
           <img :src="items[getNextIndex()].image" alt="treinamento" />
         </div>
@@ -74,14 +109,14 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
       </div>
     </div>
 
-    <div class="buttons-depoimentos">
+    <!-- <div class="buttons-depoimentos">
       <button @click="prev">
         <img src="../assets/icons/left.svg" alt="left" />
       </button>
       <button @click="next">
         <img src="../assets/icons/rigth.svg" alt="right" />
       </button>
-    </div>
+    </div> -->
   </section>
 </template>
 <style scoped>
@@ -105,7 +140,7 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   overflow: hidden;
 }
 
-.depoimentos-text {
+.depoimentos-item {
   background-color: #555252;
   border-radius: 15px;
   position: absolute;

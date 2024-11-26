@@ -31,11 +31,47 @@ const prev = () => {
 
 const getPrevIndex = () => (currentIndex.value - 1 + items.value.length) % items.value.length
 const getNextIndex = () => (currentIndex.value + 1) % items.value.length
+
+
+// Variáveis para o gesto
+let startX = 0
+let currentTranslate = 0
+let prevTranslate = 0
+let isDragging = false
+
+// Handlers de evento
+const onTouchStart = (event) => {
+  startX = event.touches[0].clientX
+  isDragging = true
+}
+
+const onTouchMove = (event) => {
+  if (!isDragging) return
+  const currentX = event.touches[0].clientX
+  currentTranslate = prevTranslate + currentX - startX
+}
+
+const onTouchEnd = () => {
+  isDragging = false
+
+  // Lógica de navegação
+  if (currentTranslate - prevTranslate > 50) {
+    prev()
+  } else if (currentTranslate - prevTranslate < -50) {
+    next()
+  }
+
+  // Reseta o translate
+  currentTranslate = 0
+  prevTranslate = 0
+}
 </script>
 
 <template>
   <section class="carousel-container">
-    <div class="carousel">
+    <div class="carousel" @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd">
       <div class="carousel-text prev" v-if="items[getPrevIndex()]">
         <h3>{{ items[getPrevIndex()].title }}</h3>
         <p>{{ items[getPrevIndex()].content }}</p>
@@ -131,14 +167,13 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
   z-index: 1;
 }
 
-
 .buttons-carousel {
   position: absolute;
   z-index: 2;
-  top: 20%;
+  top: 30%; 
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   transform: translateY(-50%);
 }
 
@@ -149,8 +184,8 @@ const getNextIndex = () => (currentIndex.value + 1) % items.value.length
 }
 
 .buttons-carousel img {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
 }
 
 .background-image {
